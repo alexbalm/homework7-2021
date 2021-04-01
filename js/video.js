@@ -8,7 +8,9 @@ window.addEventListener("onload", function() {
 document.querySelector("#play").addEventListener("click", 
 function() {
  	console.log("Play Video");
-	 video.play();
+	video.play();
+	var val = document.getElementById("slider").value;
+	document.querySelector("#volume") = val+"%";
 });
 
 document.querySelector('#pause').addEventListener("click",
@@ -19,20 +21,26 @@ function() {
 
 document.querySelector('#slower').addEventListener("click",
 function() {
-	console.log("Slow Down");
-	video.playbackRate = video.playbackRate-0.5;
+	video.playbackRate = video.playbackRate-0.05;
+	console.log("Slow Down"+video.playbackRate);
 });
 
 document.querySelector('#faster').addEventListener("click",
 function() {
-	console.log("Speed Up");
-	video.playbackRate = video.playbackRate+0.5;
+	video.playbackRate = video.playbackRate+0.05;
+	console.log("Speed Up"+video.playbackRate);
 });
 
 document.querySelector('#skip').addEventListener("click",
 function() {
-	console.log("Skip Ahead");
-	video.currentTime = video.currentTime+15
+	if (video.currentTime+15 < video.duration) {
+		video.currentTime = video.currentTime+15;
+		console.log("Skip Ahead"+video.currentTime);
+	}
+	else {
+		video.currentTime = 0;
+		console.log("Restart Video"+video.currentTime);
+	}
 });
 
 document.querySelector('#mute').addEventListener("click",
@@ -40,16 +48,28 @@ function() {
 	if (video.muted == false){
 		console.log("Mute");
 		video.muted = true;
+		document.querySelector('#mute').value = 'Unmute';
 	}
 	else {
 		console.log("Unmute");
 		video.muted = false;
+		document.querySelector('#mute').value = 'Mute';
 	}
 });
 
 document.querySelector('#slider').addEventListener("change",
 function() {
-	val = document.getElementById("slider").value;
+	var val = document.getElementById("slider").value;
 	video.volume = val;
-	document.getElementById("volume") = val+"%";
+	document.querySelector("#volume") = val+"%";
+});
+
+document.querySelector('#vintage').addEventListener("click",
+function() {
+	video.classList.add("oldSchool");
+});
+
+document.querySelector('#orig').addEventListener("click",
+function() {
+	video.classList.remove("oldSchool");
 });
